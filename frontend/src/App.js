@@ -911,11 +911,10 @@ class App extends React.Component {
         </div>
         <div className="padded">
           <div className="video-container">
-            <iframe title="youtube" className="youtube" src="https://www.youtube.com/embed/lMSWhCwstLo" frameBorder="0"
+            <iframe title="youtube3" className="youtube" src="https://www.youtube.com/embed/wfTa-Kgw2DM" frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen></iframe>
           </div>
-          <div></div>
         </div>
         <div className="padded">
           <div className="video-container">
@@ -924,9 +923,15 @@ class App extends React.Component {
                     allowFullScreen></iframe>
           </div>
         </div>
-        <div></div>
+        <div className="padded">
+          <div className="video-container">
+            <iframe title="youtube" className="youtube" src="https://www.youtube.com/embed/lMSWhCwstLo" frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen></iframe>
+          </div>
+        </div>
         {weapons}
-        <a className="github-fork-ribbon right-bottom fixed" href="https://github.com/evgenykuzyakov/place" data-ribbon="Fork me on GitHub"
+        <a className="github-fork-ribbon right-bottom fixed" href="https://github.com/evgenykuzyakov/berryclub" data-ribbon="Fork me on GitHub"
            title="Fork me on GitHub">Fork me on GitHub</a>
       </div>
     );
