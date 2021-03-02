@@ -26,6 +26,7 @@ const NearConfig = IsMainnet ? MainNearConfig : TestNearConfig;
 const Avocado = <span role="img" aria-label="avocado" className="berry">🥑</span>;
 const Banana = <span role="img" aria-label="banana" className="berry">🍌</span>;
 const Cucumber = <span role="img" aria-label="cucumber" className="berry">🥒</span>;
+const Pepper = <span role="img" aria-label="pepper" className="berry">🌶️</span>;
 
 const Berry = {
   Avocado: 'Avocado',
@@ -876,6 +877,10 @@ class App extends React.Component {
           <a
             className="btn btn-outline-none"
             href="https://bananaswap.berryclub.io">[BETA] Banana Swap {Banana}
+          </a>
+          <a
+            className="btn btn-outline-none"
+            href="https://berry.cards">[BETA] Berry Cards {Pepper}
           </a>
           {content}
         </div>
