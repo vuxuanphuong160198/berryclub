@@ -1,28 +1,20 @@
 use super::*;
-use near_sdk::serde::Serialize;
+use near_contract_standards::fungible_token::metadata::{
+    FungibleTokenMetadata, FungibleTokenMetadataProvider, FT_METADATA_SPEC,
+};
 
-#[derive(Serialize)]
-#[serde(crate = "near_sdk::serde")]
-pub struct FungibleTokenMetadata {
-    version: String,
-    name: String,
-    symbol: String,
-    url: String,
-    decimals: u8,
-}
-
-pub trait FungibleTokenMetadataProvider {
-    fn ft_metadata() -> FungibleTokenMetadata;
-}
+const BANANA_SVG: &str = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='256' height='256'%3E%3Cdefs%3E%3Ctext id='A' x='50' y='180' font-size='180'%3E🍌%3C/text%3E%3C/defs%3E%3Cuse xlink:href='%23A'/%3E%3C/svg%3E%0A";
 
 #[near_bindgen]
 impl FungibleTokenMetadataProvider for Place {
-    fn ft_metadata() -> FungibleTokenMetadata {
+    fn ft_metadata(&self) -> FungibleTokenMetadata {
         FungibleTokenMetadata {
-            version: String::from("0.1.0"),
+            spec: FT_METADATA_SPEC.to_string(),
             name: String::from("Banana"),
-            symbol: String::from("BANANA"),
-            url: String::from("https://github.com/evgenykuzyakov/berryclub"),
+            symbol: String::from("🍌"),
+            icon: Some(String::from(BANANA_SVG)),
+            reference: None,
+            reference_hash: None,
             decimals: 18,
         }
     }

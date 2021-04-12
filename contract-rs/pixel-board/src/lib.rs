@@ -23,11 +23,13 @@ pub use crate::board::*;
 
 mod fungible_token_core;
 mod fungible_token_metadata;
+mod fungible_token_storage;
 mod internal;
 pub mod token;
 
 pub use crate::fungible_token_core::*;
 pub use crate::fungible_token_metadata::*;
+pub use crate::fungible_token_storage::*;
 use crate::internal::*;
 
 pub use crate::token::*;
