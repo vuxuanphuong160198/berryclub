@@ -876,7 +876,7 @@ class App extends React.Component {
           </a>
           <a
             className="btn btn-outline-none"
-            href="https://bananaswap.berryclub.io">[BETA] Banana Swap {Banana}
+            href="https://app.ref.finance/#wNEAR-BANANA">REF Finance {Banana}
           </a>
           <a
             className="btn btn-outline-none"

@@ -11,7 +11,7 @@ impl FungibleTokenMetadataProvider for Place {
         FungibleTokenMetadata {
             spec: FT_METADATA_SPEC.to_string(),
             name: String::from("Banana"),
-            symbol: String::from("🍌"),
+            symbol: String::from("BANANA"),
             icon: Some(String::from(BANANA_SVG)),
             reference: None,
             reference_hash: None,
