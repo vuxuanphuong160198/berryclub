@@ -10,6 +10,7 @@ const STORAGE_AMOUNT_BYTES: usize = size_of::<UpgradableAccount>() + 68 + 40 + 1
 #[allow(unused_variables)]
 #[near_bindgen]
 impl StorageManagement for Place {
+    #[payable]
     fn storage_deposit(
         &mut self,
         account_id: Option<ValidAccountId>,
