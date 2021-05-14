@@ -197,6 +197,7 @@ class App extends React.Component {
       weaponsCodePosition: 0,
       freeDrawingStart: new Date(freeDrawingStartMsEstimated),
       freeDrawingEnd: new Date(freeDrawingStartMsEstimated + OneDayMs),
+      watchMode: false,
     };
 
     this._buttonDown = false;
@@ -230,6 +231,9 @@ class App extends React.Component {
     this._context = canvas.getContext("2d");
 
     const click = async () => {
+      if (this.state.watchMode) {
+        return;
+      }
       if (this.state.rendering) {
         await this.drawImg(this.state.selectedCell);
       } else if (this.state.pickingColor) {
@@ -656,7 +660,7 @@ class App extends React.Component {
       this._refreshBoardTimer = null;
     }
     const t = new Date().getTime();
-    if (t < this._stopRefreshTime) {
+    if (this.state.watchMode || t < this._stopRefreshTime) {
       this._refreshBoardTimer = setTimeout(async () => {
         await this.refreshBoard(false);
       }, RefreshBoardTimeout);
@@ -802,7 +806,7 @@ class App extends React.Component {
       ctx.fillRect(p.x * CellWidth, p.y * CellHeight, CellWidth, CellHeight);
     });
 
-    if (this.state.selectedCell) {
+    if (this.state.selectedCell && !this.state.watchMode) {
       const c = this.state.selectedCell;
       if (this.state.rendering) {
         const img = this.imageData;
@@ -1020,9 +1024,14 @@ class App extends React.Component {
   }
 
   render() {
+    const watchClass = this.state.watchMode ? " hidden" : "";
     const isFreeDrawing = this._isFreeDrawing();
     const freeDrawing = (
-      <div className={`free-drawing ${isFreeDrawing ? "free" : "wait"}`}>
+      <div
+        className={`free-drawing ${
+          isFreeDrawing ? "free" : "wait"
+        }${watchClass}`}
+      >
         {isFreeDrawing
           ? "BANANZA!!! Draw for free "
           : "Time until free drawing "}
@@ -1069,7 +1078,7 @@ class App extends React.Component {
       </div>
     ) : this.state.signedIn ? (
       <div>
-        <div className="float-right">
+        <div className={`float-right${watchClass}`}>
           <button
             className="btn btn-outline-secondary"
             onClick={() => this.logOut()}
@@ -1078,7 +1087,7 @@ class App extends React.Component {
           </button>
         </div>
         {freeDrawing}
-        <div className="your-balance">
+        <div className={`your-balance${watchClass}`}>
           Balance:{" "}
           <Balance
             account={this.state.account}
@@ -1103,7 +1112,7 @@ class App extends React.Component {
             />
           </div>
         </div>
-        <div className="buttons">
+        <div className={`buttons${watchClass}`}>
           <button
             className="btn btn-primary"
             onClick={() => this.buyTokens(10)}
@@ -1133,7 +1142,7 @@ class App extends React.Component {
             for <span className="font-weight-bold">Ⓝ5</span>
           </button>
         </div>
-        <div className="color-picker">
+        <div className={`color-picker${watchClass}`}>
           <HuePicker
             color={this.state.pickerColor}
             width="100%"
@@ -1191,6 +1200,14 @@ class App extends React.Component {
           account={this.state.account}
           isFreeDrawing={isFreeDrawing}
           renderIt={(img, avocadoNeeded) => this.renderImg(img, avocadoNeeded)}
+          enableWatchMode={() => {
+            this.setState({
+              watchMode: true,
+              weaponsOn: false,
+              weaponsCodePosition: 0,
+            });
+            document.body.style.backgroundColor = "#333";
+          }}
         />
       </div>
     ) : (
@@ -1198,7 +1215,7 @@ class App extends React.Component {
     );
     return (
       <div>
-        <div className="header">
+        <div className={`header${watchClass}`}>
           <h2>
             {Avocado} Berry Club {Banana}
           </h2>{" "}
@@ -1226,13 +1243,15 @@ class App extends React.Component {
                   height={600}
                   className={
                     this.state.boardLoaded
-                      ? "pixel-board"
+                      ? `pixel-board${
+                          this.state.watchMode ? " watch-mode" : ""
+                        }`
                       : "pixel-board c-animated-background"
                   }
                 />
               </div>
             </div>
-            <div className="leaderboard">
+            <div className={`leaderboard${watchClass}`}>
               <div>
                 <Leaderboard
                   owners={this.state.owners}
@@ -1245,7 +1264,7 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-        <div className="padded">
+        <div className={`padded${watchClass}`}>
           {this.state.signedIn ? (
             <div>
               <iframe
@@ -1259,7 +1278,7 @@ class App extends React.Component {
             ""
           )}
         </div>
-        <div className="padded">
+        <div className={`padded${watchClass}`}>
           <div className="video-container">
             <iframe
               title="youtube3"
@@ -1271,7 +1290,7 @@ class App extends React.Component {
             />
           </div>
         </div>
-        <div className="padded">
+        <div className={`padded${watchClass}`}>
           <div className="video-container">
             <iframe
               title="youtube2"
@@ -1283,7 +1302,7 @@ class App extends React.Component {
             />
           </div>
         </div>
-        <div className="padded">
+        <div className={`padded${watchClass}`}>
           <div className="video-container">
             <iframe
               title="youtube"
@@ -1297,7 +1316,7 @@ class App extends React.Component {
         </div>
         {weapons}
         <a
-          className="github-fork-ribbon right-bottom fixed"
+          className={`github-fork-ribbon right-bottom fixed${watchClass}`}
           href="https://github.com/evgenykuzyakov/berryclub"
           data-ribbon="Fork me on GitHub"
           title="Fork me on GitHub"

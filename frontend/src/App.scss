@@ -154,6 +154,17 @@ h2 {
 .pixel-board {
   @include block;
   border: 1px solid #ddd;
+  &.watch-mode {
+    position: fixed;
+    width: calc(min(100vh, 100vw));
+    max-width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #000;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 

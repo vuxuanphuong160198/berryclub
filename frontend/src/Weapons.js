@@ -189,6 +189,12 @@ export class Weapons extends React.Component {
           >
             Render on the board using {this.state.avocadoNeeded} {Avocado}
           </button>
+          <button
+            className="btn btn-primary btn-large"
+            onClick={() => this.props.enableWatchMode()}
+          >
+            Enable watch mode
+          </button>
           <div className="canvas-wrapper">
             <canvas
               ref={this.canvasRef}
