@@ -268,3 +268,14 @@ Layout For Tablet / Phone
 .root-modal {
 
 }
+.free-drawing {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  &.free {
+    color: #ffff00;
+    background: #000;
+  }
+  &.wait {
+    color: #999999;
+  }
+}

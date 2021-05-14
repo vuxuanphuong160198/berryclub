@@ -13,7 +13,7 @@ const FARM_START_TIME: u64 = 1606019138008904777;
 const REWARD_PERIOD: u64 = 60 * 1_000_000_000;
 const PORTION_OF_REWARDS: Balance = 24 * 60;
 
-const FREE_SATS_DAY_MS: u64 = 1620432000000;
+const FREE_SATS_DAY_MS: u64 = 1620518400000;
 const ONE_DAY_MS: u64 = 24 * 60 * 60 * 1000;
 
 const FARM_CONTRACT_ID_PREFIX: &str = "farm";
@@ -123,7 +123,7 @@ impl Place {
     }
 
     pub fn get_free_drawing_timestamp(&self) -> u64 {
-        let time_ms = env::block_timestamp() / 1_000_000;
+        let time_ms = ms_time();
         let week_offset_ms = (time_ms - FREE_SATS_DAY_MS) % (7 * ONE_DAY_MS);
         time_ms - week_offset_ms + ONE_DAY_MS * 6
     }
@@ -134,7 +134,7 @@ impl Place {
         }
         let mut account = self.get_mut_account(env::predecessor_account_id());
         let new_pixels = pixels.len() as u32;
-        if self.get_free_drawing_timestamp() <= env::block_timestamp() {
+        if ms_time() < self.get_free_drawing_timestamp() {
             let cost = account.charge(Berry::Avocado, new_pixels);
             self.burned_balances[Berry::Avocado as usize] += cost;
         }
