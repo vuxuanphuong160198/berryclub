@@ -1206,6 +1206,7 @@ class App extends React.Component {
               weaponsOn: false,
               weaponsCodePosition: 0,
             });
+            document.body.style.transition = "3s";
             document.body.style.backgroundColor = "#333";
           }}
         />

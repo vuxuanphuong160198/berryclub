@@ -155,6 +155,7 @@ h2 {
   @include block;
   border: 1px solid #ddd;
   &.watch-mode {
+    transition: 3s;
     position: fixed;
     width: calc(min(100vh, 100vw));
     max-width: 100%;
