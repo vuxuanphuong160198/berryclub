@@ -1203,12 +1203,15 @@ class App extends React.Component {
       </div>
     ) : (
       <div style={{ marginBottom: "10px" }}>
-        <button
-          className="btn btn-primary"
-          onClick={() => this.requestSignIn()}
-        >
-          Log in with NEAR Wallet
-        </button>
+        {freeDrawing}
+        <div>
+          <button
+            className="btn btn-primary"
+            onClick={() => this.requestSignIn()}
+          >
+            Log in with NEAR Wallet
+          </button>
+        </div>
       </div>
     );
     const weapons = this.state.weaponsOn ? (
