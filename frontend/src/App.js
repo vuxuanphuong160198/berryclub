@@ -215,14 +215,21 @@ class App extends React.Component {
     this._accounts = {};
 
     this._initNear().then(() => {
-      this.setState({
-        connected: true,
-        signedIn: !!this._accountId,
-        accountId: this._accountId,
-        ircAccountId: this._accountId.replace(".", "_"),
-        freeDrawingStart: this._freeDrawingStart,
-        freeDrawingEnd: this._freeDrawingEnd,
-      });
+      this.setState(
+        {
+          connected: true,
+          signedIn: !!this._accountId,
+          accountId: this._accountId,
+          ircAccountId: this._accountId.replace(".", "_"),
+          freeDrawingStart: this._freeDrawingStart,
+          freeDrawingEnd: this._freeDrawingEnd,
+        },
+        () => {
+          if (window.location.hash.indexOf("watch") >= 0) {
+            setTimeout(() => this.enableWatchMode(), 500);
+          }
+        }
+      );
     });
   }
 
@@ -1023,6 +1030,16 @@ class App extends React.Component {
     );
   }
 
+  enableWatchMode() {
+    this.setState({
+      watchMode: true,
+      weaponsOn: false,
+      weaponsCodePosition: 0,
+    });
+    document.body.style.transition = "3s";
+    document.body.style.backgroundColor = "#333";
+  }
+
   render() {
     const watchClass = this.state.watchMode ? " hidden" : "";
     const isFreeDrawing = this._isFreeDrawing();
@@ -1200,15 +1217,7 @@ class App extends React.Component {
           account={this.state.account}
           isFreeDrawing={isFreeDrawing}
           renderIt={(img, avocadoNeeded) => this.renderImg(img, avocadoNeeded)}
-          enableWatchMode={() => {
-            this.setState({
-              watchMode: true,
-              weaponsOn: false,
-              weaponsCodePosition: 0,
-            });
-            document.body.style.transition = "3s";
-            document.body.style.backgroundColor = "#333";
-          }}
+          enableWatchMode={() => this.enableWatchMode()}
         />
       </div>
     ) : (
