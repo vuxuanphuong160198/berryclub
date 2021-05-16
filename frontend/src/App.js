@@ -52,7 +52,7 @@ const Berry = {
 
 const BoardHeight = 50;
 const BoardWidth = 50;
-const NumLinesPerFetch = 10;
+const NumLinesPerFetch = 50;
 const ExpectedLineLength = 4 + 8 * BoardWidth;
 const CellWidth = 12;
 const CellHeight = 12;
@@ -401,6 +401,14 @@ class App extends React.Component {
     );
   }
 
+  async refreshAllowance() {
+    alert(
+      "You're out of access key allowance. Need sign in again to refresh it"
+    );
+    await this.logOut();
+    await this.requestSignIn();
+  }
+
   async _sendQueue() {
     const pixels = this._queue.slice(0, BatchOfPixels);
     this._queue = this._queue.slice(BatchOfPixels);
@@ -415,6 +423,11 @@ class App extends React.Component {
       );
       this._numFailedTxs = 0;
     } catch (error) {
+      const msg = error.toString();
+      if (msg.indexOf("does not have enough balance") !== -1) {
+        await this.refreshAllowance();
+        return;
+      }
       console.log("Failed to send a transaction", error);
       this._numFailedTxs += 1;
       if (this._numFailedTxs < 3) {
@@ -701,7 +714,9 @@ class App extends React.Component {
     }
 
     this._lineVersions = lineVersions;
-    this._refreshOwners();
+    if (!this.state.watchMode) {
+      this._refreshOwners();
+    }
     this.renderCanvas();
   }
 
@@ -1291,42 +1306,42 @@ class App extends React.Component {
             ""
           )}
         </div>
-        <div className={`padded${watchClass}`}>
-          <div className="video-container">
-            <iframe
-              title="youtube3"
-              className="youtube"
-              src="https://www.youtube.com/embed/wfTa-Kgw2DM"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-        <div className={`padded${watchClass}`}>
-          <div className="video-container">
-            <iframe
-              title="youtube2"
-              className="youtube"
-              src="https://www.youtube.com/embed/PYF6RWd7ZgI"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-        <div className={`padded${watchClass}`}>
-          <div className="video-container">
-            <iframe
-              title="youtube"
-              className="youtube"
-              src="https://www.youtube.com/embed/lMSWhCwstLo"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
+        {/*<div className={`padded${watchClass}`}>*/}
+        {/*  <div className="video-container">*/}
+        {/*    <iframe*/}
+        {/*      title="youtube3"*/}
+        {/*      className="youtube"*/}
+        {/*      src="https://www.youtube.com/embed/wfTa-Kgw2DM"*/}
+        {/*      frameBorder="0"*/}
+        {/*      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+        {/*      allowFullScreen*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*<div className={`padded${watchClass}`}>*/}
+        {/*  <div className="video-container">*/}
+        {/*    <iframe*/}
+        {/*      title="youtube2"*/}
+        {/*      className="youtube"*/}
+        {/*      src="https://www.youtube.com/embed/PYF6RWd7ZgI"*/}
+        {/*      frameBorder="0"*/}
+        {/*      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+        {/*      allowFullScreen*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*<div className={`padded${watchClass}`}>*/}
+        {/*  <div className="video-container">*/}
+        {/*    <iframe*/}
+        {/*      title="youtube"*/}
+        {/*      className="youtube"*/}
+        {/*      src="https://www.youtube.com/embed/lMSWhCwstLo"*/}
+        {/*      frameBorder="0"*/}
+        {/*      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+        {/*      allowFullScreen*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         {weapons}
         <a
           className={`github-fork-ribbon right-bottom fixed${watchClass}`}
